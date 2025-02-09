@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login with Face</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.css">
+    <script src="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .main-container {
+            background-color: #e0eafd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .layui-btn-primary {
+            background-color: #3c78d8;
+            color: white;
+            border: none;
+        }
+
+        .layui-btn-normal {
+            background-color: #2a64a7;
+            color: white;
+            border: none;
+        }
+
+        .layui-btn:hover {
+            opacity: 0.9;
+        }
+
+        .video {
+            transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            /*for safari*/
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .error-body {
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .error-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        .error-icon {
+            font-size: 100px;
+            color: #ff4d4f;
+        }
+
+        .error-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .layui-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-container main-container">
+        <div style=" text-align: center;">
+            <h3>Login with Face</h3>
+            <video class="video" id="faceAuth" autoplay></video>
+            <p id="authStatus">Authenticating...</p>
+
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { baseUrl, authenticateUrl } from '../js/constant.js';
+        import { startCamera, authenticateFace, redirectToWelcomePage } from '../js/utils.js';
+        console.log(baseUrl);
+        
+        function startLiveAuthentication() {
+
+            setInterval(() => authenticateFace('faceAuth',authenticateUrl), 3000);
+        }
+        
+        // calling functions
+        /*startCamera('faceAuth', () => {
+            let video = document.getElementById('faceAuth');
+            waitForVideo(video, () => {
+                startLiveAuthentication();
+
+            });
+        });*/
+        startCamera('faceAuth')
+        startLiveAuthentication()
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Face Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.css">
+    <script src="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .main-container {
+            background-color: #e8ebf2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .layui-btn-primary {
+            background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+        }
+
+        .layui-btn-normal {
+             background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+        }
+
+        .layui-btn:hover {
+            opacity: 0.9;
+        }
+
+        .video {
+            transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            /*for safari*/
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .error-body {
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .error-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        .error-icon {
+            font-size: 100px;
+            color: #ff4d4f;
+        }
+
+        .error-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .layui-btn {
+            margin-top: 20px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            /* Smooth transition */
+        }
+
+        /* Button pressing effect */
+        .layui-btn:active {
+            transform: scale(0.95);
+            /* Slightly shrink the button */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Add a shadow effect */
+        }
+
+        .success-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        .success-icon {
+            font-size: 100px;
+            color: #52c41a;
+            /* Green color for success */
+        }
+
+        .success-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .layui-btn {
+            margin-top: 20px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            /* Smooth transition */
+        }
+
+        /* Button pressing effect */
+        .layui-btn:active {
+            transform: scale(0.95);
+            /* Slightly shrink the button */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Add a shadow effect */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-container main-container" id="main-content">
+        <div style=" text-align: center;">
+            <h3>Face Registration</h3>
+            <video class="video" id="registerFace" autoplay></video>
+
+            <br>
+
+
+            <div class="layui-form-item">
+                <div style="display: flex; flex-direction: column ; justify-content: space-between; gap: 4%;">
+
+                    <div style="flex: 1; ">
+                        <input class="layui-input" type="text" name="username" id="userName" required
+                            lay-verify="required" placeholder="Enter Username" class="layui-input"></input>
+                    </div>
+                    <div style="flex: 1; ">
+                        <input class="layui-input" type="text" name="email" id="email" required lay-verify="required"
+                            placeholder="Enter email" class="layui-input"></input>
+                    </div>
+
+                    <div style="flex: 1; ">
+                        <button class="layui-btn layui-btn-primary" style="margin-top:20px ;" id="faceRegistrationBtn"
+                            onclick="onFaceRegisteration()" data-lang>Register
+                            Face</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- Error Page (Hidden by Default) -->
+    <div class="error-container" id="error-page">
+        <div class="error-icon">&#9888;</div>
+        <div class="error-title">Error!</div>
+        <div class="error-message" id="error-message">We encountered an issue while processing your request. Please try
+            again later.</div>
+        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
+    </div>
+
+    <div class="success-container" id="success-page">
+        <div class="success-icon">&#10004;</div>
+        <div class="success-title">Success!</div>
+        <div class="success-message" id="success-message">Authentication request was processed successfully.</div>
+        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
+    </div>
+
+    <script  >
+       // import {aaa} from '../js/utils.js';
+       // import {registerUrl} from '../js/constant.js'
+
+        function startCamera(videoElementId) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    document.getElementById(videoElementId).srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.error("Error accessing the camera:", error);
+                });
+        }
+
+        function onFaceRegisteration() {
+            if (document.getElementById("userName").value.trim() === "") {
+
+                layer.msg("userName cannot be empty!", { icon: 2, time: 2000 });
+            }
+            else {
+                registerFaceBeta("http://192.168.29.177:8000/register")
+            }
+
+        }
+
+        /*layui.use(['layer'], function() {
+            var layer = layui.layer;
+            
+            document.getElementById("faceRegistrationBtn").addEventListener("click", function() {
+                var index = layer.open({
+                    type: 3, // Use loading type
+                    content: '<div class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="font-size:30px; color:#009688;"></div>',
+                    shade: .7 // Add background shade
+                });
+                
+                // Simulate an operation (e.g., API call) with a delay
+                setTimeout(function() {
+                    layer.close(index); // Close the loading dialog after 3 seconds
+                    layer.msg('Loading complete!', {time: 2000}); // Show completion message
+                }, 3000);
+            });
+        });*/
+
+        function registerFace(apiUrl) {
+            let video = document.getElementById('registerFace');
+            let canvas = document.createElement('canvas');
+            let element = document.getElementById('userName');
+            let userName = element.value;
+            let email = document.getElementById('email').value;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(function (blob) {
+                let formData = new FormData();
+                formData.append('name', userName);
+                formData.append('email', email);
+                formData.append('file', blob, 'face.jpg');
+
+                fetch(apiUrl, {
+                    method: 'POST',
+                    body: formData
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        //layer.msg(data.message);
+                        layer.msg(data.message, { icon: 1, time: 2000 });
+                        //showPopup(data)
+                        // redirectToLoginPage()
+                        showSuccessMessage()
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error)
+                        showErrorPage(error)
+                    });
+            }, 'image/jpeg');
+        }
+
+        async function registerFaceBeta(apiUrl) {
+
+            layui.use('layer', function () {
+
+                const layer = layui.layer;
+                const loading = layer.load(2); // Show loading spinner
+
+                let video = document.getElementById('registerFace');
+                let canvas = document.createElement('canvas');
+                let element = document.getElementById('userName');
+                let userName = element.value;
+                let email = document.getElementById('email').value;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                let ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                canvas.toBlob(function (blob) {
+                    let formData = new FormData();
+                    formData.append('name', userName);
+                    formData.append('email', email);
+                    formData.append('file', blob, 'face.jpg');
+
+                   
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        body: formData
+
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            //layer.msg(data.message);
+                            layer.msg(data.message, { icon: 1, time: 2000 });
+                          //  showPopup(data)
+                            // redirectToLoginPage()
+                            if(data.code === "1"){
+                                showSuccessMessage(data.message)
+
+                            }
+                            else{
+                                showErrorPage(data.message)
+                            }
+                            
+
+                        })
+                        .catch(error => {
+                            console.error('Error:', error)
+                            showErrorPage(error)
+                        })
+                        .finally(() => {
+                             layer.close(loading); // Hide loading spinner
+                        });
+                }, 'image/jpeg');
+
+
+            });
+
+        }
+        function showPopup(data) {
+            if (data.code === "1") {
+                layer.open({
+                    title: data.message,  // Dialog title
+                    content: 'Please login again.', // Message content
+                    btn: ['OK'],  // Button text
+                    yes: function (index) {
+                        layer.close(index);
+                        redirectToLoginPage() // Close the dialog when OK is clicked
+                    }
+                });
+
+            }
+            else {
+                layer.open({
+                    title: data.message,  // Dialog title
+                    content: 'Please try again', // Message content
+                    btn: ['OK'],  // Button text
+                    yes: function (index) {
+                        layer.close(index);
+                        //redirectToLoginPage()
+
+                    }
+                });
+            }
+
+        }
+
+        function redirectToLoginPage() {
+            console.log("Redirecting...");
+            window.location.href = "test.html";
+        }
+
+        // Function to display the error page
+        function showErrorPage(errorMessage) {
+            // Hide the main content
+            document.getElementById('main-content').style.display = 'none';
+            // Show the error page
+            const errorPage = document.getElementById('error-page');
+            errorPage.style.display = 'block';
+            // Set the error message dynamically
+            document.getElementById('error-message').textContent = errorMessage;
+        }
+
+        function showSuccessMessage(successMessage){
+            document.getElementById('main-content').style.display = 'none';
+            // Show the error page
+            const errorPage = document.getElementById('error-page');
+            errorPage.style.display = 'none';
+            // Set the error message dynamically
+            const successPage = document.getElementById('success-page');
+            successPage.style.display = 'block';
+            document.getElementById('success-message').textContent = successMessage;
+        }
+
+
+        // calling functions
+        startCamera('registerFace');
+
+        /////
+
+
+
+    </script>
+
+
+</body>
+
+</html>

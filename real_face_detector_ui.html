@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Face Spoof Detection</title>
+  <link rel="stylesheet" href="https://cdn.layui.com/2.8.0/css/layui.css">
+</head>
+<body>
+  <div class="layui-container" style="margin-top: 50px;">
+    <div class="layui-row">
+      <div class="layui-col-md6 layui-col-md-offset3">
+        <div class="layui-card">
+          <div class="layui-card-header">Face Spoof Detection</div>
+          <div class="layui-card-body">
+            <!-- Upload Image Form -->
+            <form class="layui-form" id="uploadForm">
+              <div class="layui-form-item">
+                <label class="layui-form-label">Upload Image</label>
+                <div class="layui-input-block">
+                  <input type="file" name="file" id="file" class="layui-input" accept="image/*">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn" id="uploadBtn">Upload and Detect</button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Display Results -->
+            <div id="result" style="margin-top: 20px; display: none;">
+              <h3>Detection Result:</h3>
+              <p id="resultText"></p>
+              <img id="resultImage" src="" alt="Uploaded Image" style="max-width: 100%; margin-top: 10px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.layui.com/2.8.0/layui.js"></script>
+  <script>
+    layui.use(['form', 'upload', 'layer'], function () {
+      var form = layui.form;
+      var upload = layui.upload;
+      var layer = layui.layer;
+
+      // Handle file upload and detection
+      document.getElementById('uploadBtn').onclick = function () {
+        var fileInput = document.getElementById('file');
+        if (fileInput.files.length === 0) {
+          layer.msg('Please select an image first.', { icon: 2 });
+          return;
+        }
+
+        var formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        // Show loading animation
+        layer.load(1);
+
+        // Send the image to the backend
+        fetch('/detect', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          layer.closeAll('loading'); // Close loading animation
+          if (data.success) {
+            // Display the result
+            document.getElementById('resultText').innerText = data.message;
+            document.getElementById('resultImage').src = data.image_url;
+            document.getElementById('result').style.display = 'block';
+          } else {
+            layer.msg(data.message, { icon: 2 });
+          }
+        })
+        .catch(error => {
+          layer.closeAll('loading'); // Close loading animation
+          layer.msg('An error occurred. Please try again.', { icon: 2 });
+          console.error(error);
+        });
+      };
+    });
+  </script>
+</body>
+</html>

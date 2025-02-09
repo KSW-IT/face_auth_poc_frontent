@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.7.6/css/layui.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .welcome-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .welcome-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-md4 layui-col-md-offset4 welcome-card">
+                <i class="layui-icon layui-icon-face-smile" style="font-size: 50px; color: #FFB800;"></i>
+                <h1 class="welcome-title">Welcome </h1>
+                <p class="layui-text" id="receivedString"></p>
+                <button class="layui-btn layui-btn-normal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const receivedString = urlParams.get('string'); 
+    
+        document.getElementById("receivedString").textContent = decodeURIComponent(receivedString); 
+      </script>
+</body>
+</html>

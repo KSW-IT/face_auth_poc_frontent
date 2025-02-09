@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン / Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .login-container {
+            background-color: #e0eafd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .layui-btn-primary {
+            background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+        }
+
+        .layui-btn-normal {
+            background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+
+        }
+
+        .layui-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+    <script>
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(el => {
+                el.innerText = el.dataset[lang];
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="layui-container login-container">
+        <div style="text-align: right; margin-bottom: 10px;">
+            <button onclick="changeLanguage('ja')" class="layui-btn layui-btn-xs">日本語</button>
+            <button onclick="changeLanguage('en')" class="layui-btn layui-btn-xs">English</button>
+        </div>
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend data-lang data-ja="ログイン" data-en="Login">ログイン</legend>
+        </fieldset>
+
+        <button class="layui-btn layui-btn-primary layui-btn-fluid" 　 onclick="redirectToFaceAuthPage()" data-lang
+            data-ja="顔認証ログイン" data-en="Face Recognition Login">顔認証ログイン</button>
+
+        <form class="layui-form" style="margin-top: 20px;">
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-lang data-ja="ユーザ" data-en="Username">ユーザ</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" id="userName" required lay-verify="required" placeholder="ユーザ"
+                        class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-lang data-ja="パスワード" data-en="Password">パスワード</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" id="password" required lay-verify="required"
+                        placeholder="パスワード" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div style="display: flex; justify-content: space-between; gap: 4%;">
+                    <div style="flex: 1;">
+                        <button class="layui-btn layui-btn-normal layui-btn-fluid" id="loginBtn" onclick="onLogIn()"
+                            data-lang data-ja="ログイン" data-en="Login">ログイン</button>
+                    </div>
+                    <div style="flex: 1;">
+                        <button class="layui-btn layui-btn-normal layui-btn-fluid"
+                            onclick="redirectToFaceRegistrationPage()" data-lang data-ja="ログイン＋顔認証登録"
+                            data-en="Login + Register Face">ログイン＋顔認証登録</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p style="text-align: center; margin-top: 10px;">
+            <a href="#" style="text-decoration: underline;" data-lang data-ja="パスワードをお忘れの場合は、こちらをクリック"
+                data-en="If you forgot your password, click here"
+                onclick="alert('under developement')">パスワードをお忘れの場合は、こちらをクリック</a>
+        </p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.js"></script>
+    <script>
+
+        function onLogIn() {
+            let userName = document.getElementById("userName").value.toString();
+            let password = document.getElementById("password").value.toString();
+
+            redirectToWelcomePage(userName)
+
+
+
+        }
+        function validate() {
+            let userName = document.getElementById("userName").value.toString();
+            let password = document.getElementById("password").value.toString();
+            console.log("Username: " + userName + ", Password: " + password.toString())
+
+            if (userName === "test" && password === "test") {
+
+                return true;
+            }
+            else {
+                return false;
+            }
+
+
+
+        }
+        function redirectToFaceRegistrationPage() {
+            console.log("Redirecting...");
+            window.location.href = "face_registration.html";
+        }
+        function redirectToFaceAuthPage() {
+            console.log("Redirecting...");
+            window.location.href = "face_auth.html";
+        }
+        function redirectToWelcomePage(username) {
+            var stringToPass = username;
+            window.location.href = "welcome.html?string=" + encodeURIComponent(stringToPass);
+            console.log("Redirecting...");
+            window.location.href = "welcome.html";
+
+
+        }
+    </script>
+</body>
+
+</html>

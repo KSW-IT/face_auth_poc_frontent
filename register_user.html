@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .main-container {
+            background-color: #e0eafd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .layui-btn-primary {
+            background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+        }
+
+        .layui-btn-normal {
+            background-color: #558ccf;
+            color: white;
+            border: none;
+            border-color: #000000;
+            /* Example: Blue border */
+            border-style: solid;
+            /* Required for border to show */
+            border-width: 2px;
+            /* Optional: Adjust border thickness */
+
+        }
+
+        .layui-btn:hover {
+            opacity: 0.9;
+        }
+
+        .error-body {
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .error-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        .error-icon {
+            font-size: 100px;
+            color: #ff4d4f;
+        }
+
+        .error-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .layui-btn {
+            margin-top: 20px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            /* Smooth transition */
+        }
+
+        /* Button pressing effect */
+        .layui-btn:active {
+            transform: scale(0.95);
+            /* Slightly shrink the button */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Add a shadow effect */
+        }
+
+        .success-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Initially hidden */
+        }
+
+        .success-icon {
+            font-size: 100px;
+            color: #52c41a;
+            /* Green color for success */
+        }
+
+        .success-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .layui-btn {
+            margin-top: 20px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            /* Smooth transition */
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="layui-container main-container" id="main-content">
+
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend data-en="register">Register</legend>
+        </fieldset>
+
+
+
+        <form class="layui-form" style="margin-top: 20px;">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-en="username">Username</label>
+                <div class="layui-input-block">
+                    <input type="text" name="userName" id="userName" required lay-verify="required"
+                        placeholder="Enter user name" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-en="email">Email</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" id="email" required lay-verify="required" placeholder="Enter email"
+                        class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-en="Password">Password</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" id="password" required lay-verify="required"
+                        placeholder="Enter password" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" data-lang data-ja="Password" data-en="Password">Confirm password</label>
+                <div class="layui-input-block">
+                    <input type="conPassword" name="conPassword" id="conPassword" required lay-verify="required"
+                        placeholder="Re-enter password" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div style="display: flex; justify-content: space-between; gap: 4%;">
+                    <div style="flex: 1;">
+                        <button class="layui-btn layui-btn-normal layui-btn-fluid" id="registerBtn"
+                            onclick="onRegister()" data-en="register">Register</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    <!-- Error Page (Hidden by Default) -->
+    <div class="error-container" id="error-page">
+        <div class="error-icon">&#9888;</div>
+        <div class="error-title">Error!</div>
+        <div class="error-message" id="error-message">We encountered an issue while processing your request. Please try
+            again later.</div>
+        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
+    </div>
+
+    <div class="success-container" id="success-page">
+        <div class="success-icon">&#10004;</div>
+        <div class="success-title">Success!</div>
+        <div class="success-message" id="success-message">Authentication request was processed successfully.</div>
+        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.js"></script>
+    <script>
+
+
+       async function onRegister() {
+            event.preventDefault(); // Prevent the form from refreshing the page
+            layui.use('layer', async function () {
+
+                const layer = layui.layer;
+                const loading = layer.load(2); // Show loading spinner
+
+
+                let username = document.getElementById('userName').value;
+                let email = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
+                let conPassword = document.getElementById('conPassword').value;
+
+                const payload = {
+                    username: username,
+                    password: password,
+                    email: email,
+
+                };
+
+
+
+                url = "http://192.168.29.177:8000/registerUser"
+
+
+
+                try {
+                    // Send the POST request
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Handle the response
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.code === "1") {
+                            showSuccessMessage(data.message)
+
+                        }
+                        else {
+                            showErrorPage(data.message)
+                        }
+                    } else {
+                        //  alert("Error: " + response.status);
+                        showErrorPage("Error: " + response.status)
+                    }
+                } catch (error) {
+                    //   console.error('Error:', error);
+                    // alert('Failed to send data');
+                    console.error('Error:', error)
+                    showErrorPage(error)
+                }
+                finally {
+                    layer.close(loading);
+                }
+
+
+            });
+
+
+
+
+        }
+
+        function validate() {
+            let userName = document.getElementById("userName").value.toString();
+            let password = document.getElementById("password").value.toString();
+            console.log("Username: " + userName + ", Password: " + password.toString())
+
+            if (userName === "test" && password === "test") {
+
+                return true;
+            }
+            else {
+                return false;
+            }
+
+
+
+        }
+        function redirectToFaceRegistrationPage() {
+            console.log("Redirecting...");
+            window.location.href = "face_registration.html";
+        }
+
+        function redirectToLoginPage() {
+            console.log("Redirecting...");
+            window.location.href = "index.html";
+        }
+        function redirectToFaceAuthPage() {
+            console.log("Redirecting...");
+            window.location.href = "face_auth.html";
+        }
+        function redirectToWelcomePage(username) {
+            var stringToPass = username;
+            window.location.href = "welcome.html?string=" + encodeURIComponent(stringToPass);
+            console.log("Redirecting...");
+            window.location.href = "welcome.html";
+
+
+        }
+
+        // Function to display the error page
+        function showErrorPage(errorMessage) {
+            // Hide the main content
+            document.getElementById('main-content').style.display = 'none';
+            // Show the error page
+            const errorPage = document.getElementById('error-page');
+            errorPage.style.display = 'block';
+            // Set the error message dynamically
+            document.getElementById('error-message').textContent = errorMessage;
+        }
+
+        function showSuccessMessage(successMessage) {
+            document.getElementById('main-content').style.display = 'none';
+            // Show the error page
+            const errorPage = document.getElementById('error-page');
+            errorPage.style.display = 'none';
+            // Set the error message dynamically
+            const successPage = document.getElementById('success-page');
+            successPage.style.display = 'block';
+            document.getElementById('success-message').textContent = successMessage;
+        }
+    </script>
+</body>
+
+</html>

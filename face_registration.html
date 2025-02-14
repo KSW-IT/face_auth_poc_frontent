@@ -33,7 +33,7 @@
         }
 
         .layui-btn-normal {
-             background-color: #558ccf;
+            background-color: #558ccf;
             color: white;
             border: none;
             border-color: #000000;
@@ -198,9 +198,9 @@
         <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
     </div>
 
-    <script  >
-       // import {aaa} from '../js/utils.js';
-       // import {registerUrl} from '../js/constant.js'
+    <script>
+        // import {aaa} from '../js/utils.js';
+        // import {registerUrl} from '../js/constant.js'
 
         function startCamera(videoElementId) {
             navigator.mediaDevices.getUserMedia({ video: true })
@@ -213,13 +213,16 @@
         }
 
         function onFaceRegisteration() {
-            if (document.getElementById("userName").value.trim() === "") {
+           /* if (document.getElementById("userName").value.trim() === "") {
 
                 layer.msg("userName cannot be empty!", { icon: 2, time: 2000 });
             }
             else {
                 registerFaceBeta("http://192.168.29.177:8000/register")
-            }
+               
+               
+            }*/
+            registerFaceLatest();
 
         }
 
@@ -302,7 +305,7 @@
                     formData.append('email', email);
                     formData.append('file', blob, 'face.jpg');
 
-                   
+
                     fetch(apiUrl, {
                         method: 'POST',
                         body: formData
@@ -317,16 +320,16 @@
                         .then(data => {
                             //layer.msg(data.message);
                             layer.msg(data.message, { icon: 1, time: 2000 });
-                          //  showPopup(data)
+                            //  showPopup(data)
                             // redirectToLoginPage()
-                            if(data.code === "1"){
+                            if (data.code === "1") {
                                 showSuccessMessage(data.message)
 
                             }
-                            else{
+                            else {
                                 showErrorPage(data.message)
                             }
-                            
+
 
                         })
                         .catch(error => {
@@ -334,7 +337,71 @@
                             showErrorPage(error)
                         })
                         .finally(() => {
-                             layer.close(loading); // Hide loading spinner
+                            layer.close(loading); // Hide loading spinner
+                        });
+                }, 'image/jpeg');
+
+
+            });
+
+        }
+
+        async function registerFaceLatest() {
+
+            layui.use('layer', function () {
+
+                const layer = layui.layer;
+                const loading = layer.load(2); // Show loading spinner
+
+                let video = document.getElementById('registerFace');
+                let canvas = document.createElement('canvas');
+                let element = document.getElementById('userName');
+                let userName = element.value;
+                let email = document.getElementById('email').value;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                let ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                url ="http://192.168.29.177:8000/register2";
+                canvas.toBlob(function (blob) {
+                    let formData = new FormData();
+                    formData.append('email', email);
+                    formData.append('file', blob, 'face.jpg');
+
+
+                    fetch(url, {
+                        method: 'POST',
+                        body: formData
+
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            //layer.msg(data.message);
+                            layer.msg(data.message, { icon: 1, time: 2000 });
+                            //  showPopup(data)
+                            // redirectToLoginPage()
+                            if (data.code === "1") {
+                                showSuccessMessage(data.message)
+
+                            }
+                            else {
+                                showErrorPage(data.message)
+                            }
+
+
+                        })
+                        .catch(error => {
+                            console.error('Error:', error)
+                            showErrorPage(error)
+                        })
+                        .finally(() => {
+                            layer.close(loading); // Hide loading spinner
                         });
                 }, 'image/jpeg');
 
@@ -372,7 +439,7 @@
 
         function redirectToLoginPage() {
             console.log("Redirecting...");
-            window.location.href = "test.html";
+            window.location.href = "index.html";
         }
 
         // Function to display the error page
@@ -386,7 +453,7 @@
             document.getElementById('error-message').textContent = errorMessage;
         }
 
-        function showSuccessMessage(successMessage){
+        function showSuccessMessage(successMessage) {
             document.getElementById('main-content').style.display = 'none';
             // Show the error page
             const errorPage = document.getElementById('error-page');

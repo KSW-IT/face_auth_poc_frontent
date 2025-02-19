@@ -75,7 +75,7 @@ export function authenticateFace(videoElementId, apiUrl) {
             })
             .catch(error => {
                 document.getElementById('authStatus').innerText = "Face Authentication Failed.";
-                console.error("Fetch error:", error);
+                console.error("Fetch error:", error.toString);
             });
     }, 'image/jpeg');
 }

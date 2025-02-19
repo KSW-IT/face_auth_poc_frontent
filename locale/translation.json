@@ -1,0 +1,55 @@
+{
+  "login": {
+    "en": "Login",
+    "ja": "ログイン"
+  },
+  "faceLogin": {
+    "en": "Face Recognition Login",
+    "ja": "顔認証ログイン"
+  },
+  "register": {
+    "en": "Register New User",
+    "ja": "登録"
+  },
+  "loginWithFace": {
+    "en": "Login with Face",
+    "ja": "顔認証でログイン"
+  },
+  "dontHaveAccount": {
+    "en": "Don't have an account? Register",
+    "ja": "アカウントがない場合は登録してください"
+  },
+  "username": {
+    "en": "Username",
+    "ja": "ユーザ"
+  },
+  "emailPlaceHolder": {
+    "en": "Enter Email",
+    "ja": "メル"
+  },
+  "test": {
+    "en": "test",
+    "ja": "鉄"
+  },
+  "password": {
+    "en": "Password",
+    "ja": "パスワード"
+  },
+
+  "faceRegister": {
+    "en": "Login + Register Face",
+    "ja": "ログイン＋顔認証登録"
+  },
+  "forgetPassword": {
+    "en": "If you forgot your password, click here",
+    "ja": "パスワードをお忘れの場合は、こちらをクリック"
+  },
+  "emailNotEmpty": {
+    "en": "Email cannot be empty",
+    "ja": "メールアドレスは空欄にできません"
+  },
+  "passwordNotEmpty": {
+    "en": "Password cannot be empty",
+    "ja": "パスワードは空欄にできません"
+  }
+}

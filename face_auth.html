@@ -12,13 +12,46 @@
         }
 
         .main-container {
-            background-color: #e0eafd;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 50px auto;
-        }
+           
+           margin: 0px;
+           border-radius: 10px;
+          
+           max-width: 400px;
+           margin: 0 auto;
+       }
+
+
+       .top-container {
+           background-color: #e0eafd;
+           margin: 0px;
+           border-radius: 10px;
+           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+           max-width: 600px;
+           margin: 0 auto;
+           margin-top: 20px;
+       }
+
+       .header-box {
+           border: 1px solid black;
+           /* Black border */
+           border-radius: 10px;
+           /* Rounded corners */
+           padding: 5px;
+          
+           /* Padding inside the box */
+           text-align: left;
+           /* Center-align text */
+           background-color: #b7dce7;
+           /* Light background color */
+          
+           /* Spacing around the box */
+           font-size: 16px;
+           color: white;
+           
+           /* Font size */
+           font-weight: bold;
+           /* Bold text */
+       }
 
         .layui-btn-primary {
             background-color: #3c78d8;
@@ -87,15 +120,22 @@
 </head>
 
 <body>
-    <div class="layui-container main-container">
-        <div style=" text-align: center;">
-            <h3>Login with Face</h3>
-            <video class="video" id="faceAuth" autoplay></video>
-            <p id="authStatus">Authenticating...</p>
 
+    <div class="layui-container top-container">
+        <div class="header-box" data-ja="顔認証ログイン" data-en="Login with face">
+            顔認証ログイン
+          </div>
+        <div class="layui-container main-container" id="main-content" style="margin-top: 10px;">
+            <div style=" text-align: center;">
+               
+                <video class="video" id="faceAuth" autoplay></video>
+                <p id="authStatus">Authenticating...</p>
+    
+            </div>
+    
         </div>
-
     </div>
+    
 
     <script type="module">
         import { baseUrl, authenticateUrl } from '../js/constant.js';

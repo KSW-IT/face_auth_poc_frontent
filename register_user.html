@@ -12,13 +12,46 @@
         }
 
         .main-container {
-            background-color: #e0eafd;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 50px auto;
-        }
+           
+           margin: 0px;
+           border-radius: 10px;
+          
+           max-width: 400px;
+           margin: 0 auto;
+       }
+
+
+       .top-container {
+           background-color: #e0eafd;
+           margin: 0px;
+           border-radius: 10px;
+           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+           max-width: 600px;
+           margin: 0 auto;
+           margin-top: 20px;
+       }
+
+       .header-box {
+           border: 1px solid black;
+           /* Black border */
+           border-radius: 10px;
+           /* Rounded corners */
+           padding: 5px;
+          
+           /* Padding inside the box */
+           text-align: left;
+           /* Center-align text */
+           background-color: #b7dce7;
+           /* Light background color */
+          
+           /* Spacing around the box */
+           font-size: 16px;
+           color: white;
+           
+           /* Font size */
+           font-weight: bold;
+           /* Bold text */
+       }
 
         .layui-btn-primary {
             background-color: #558ccf;
@@ -137,60 +170,66 @@
 </head>
 
 <body>
-    <div class="layui-container main-container" id="main-content">
+
+    <div class="layui-container top-container" >
+        <div class="header-box"  data-ja="ユーザー登録" data-en="Register User">
+            ユーザー登録
+          </div>
+        <div class="layui-container main-container" id="main-content">
 
 
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend data-en="register">Register</legend>
-        </fieldset>
-
-
-
-        <form class="layui-form" style="margin-top: 20px;">
-
-            <div class="layui-form-item">
-                <label class="layui-form-label" data-en="username">Username</label>
-                <div class="layui-input-block">
-                    <input type="text" name="userName" id="userName" required lay-verify="required"
-                        placeholder="Enter user name" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label" data-en="email">Email</label>
-                <div class="layui-input-block">
-                    <input type="text" name="email" id="email" required lay-verify="required" placeholder="Enter email"
-                        class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label" data-en="Password">Password</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" id="password" required lay-verify="required"
-                        placeholder="Enter password" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label" data-lang data-ja="Password" data-en="Password">Confirm password</label>
-                <div class="layui-input-block">
-                    <input type="conPassword" name="conPassword" id="conPassword" required lay-verify="required"
-                        placeholder="Re-enter password" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div style="display: flex; justify-content: space-between; gap: 4%;">
-                    <div style="flex: 1;">
-                        <button class="layui-btn layui-btn-normal layui-btn-fluid" id="registerBtn"
-                            onclick="onRegister()" data-en="register">Register</button>
+           
+    
+    
+    
+            <form class="layui-form" style="margin-top: 20px;">
+    
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-en="username">ユーザー名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userName" id="userName" required lay-verify="required"
+                            placeholder="ユーザー名を入力してください" class="layui-input">
                     </div>
-
                 </div>
-            </div>
-        </form>
-
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-en="email">メール</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" id="email" required lay-verify="required" placeholder="メールアドレスを入力"
+                            class="layui-input">
+                    </div>
+                </div>
+    
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-en="Password">パスワード</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" id="password" required lay-verify="required"
+                            placeholder="パスワードを入力してください" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-lang data-ja="Password" data-en="Password">パスワードを認証する</label>
+                    <div class="layui-input-block">
+                        <input type="conPassword" name="conPassword" id="conPassword" required lay-verify="required"
+                            placeholder="パスワード再入力" class="layui-input">
+                    </div>
+                </div>
+    
+                <div class="layui-form-item">
+                    <div style="display: flex; justify-content: space-between; gap: 4%;">
+                        <div style="flex: 1;">
+                            <button class="layui-btn layui-btn-normal layui-btn-fluid" id="registerBtn"
+                                onclick="onRegister()" data-en="register">登録する</button>
+                        </div>
+    
+                    </div>
+                </div>
+            </form>
+    
+    
+        </div>
     </div>
+
+   
     <!-- Error Page (Hidden by Default) -->
     <div class="error-container" id="error-page">
         <div class="error-icon">&#9888;</div>
@@ -224,8 +263,9 @@
                 let password = document.getElementById('password').value;
                 let conPassword = document.getElementById('conPassword').value;
 
+                
                 const payload = {
-                    username: username,
+                    userName: username,
                     password: password,
                     email: email,
 
@@ -233,7 +273,10 @@
 
 
 
-                url = "http://192.168.29.177:8000/registerUser"
+              //  url = "http://192.168.29.177:8000/registerUser"
+                  url= "http://192.168.0.140:8080/registerUser"
+
+
 
 
 

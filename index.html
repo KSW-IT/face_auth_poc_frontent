@@ -6,201 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン / Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.css">
-    <style>
-        body {
-            background-color: #f0f0f0;
-        }
+    <link rel="stylesheet" href="/assets/css/appTheme.css">
 
-        .main-container {
-            background-color: #e0eafd;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 50px auto;
-        }
 
-        .layui-btn-primary {
-            background-color: #558ccf;
-            color: white;
-            border: none;
-            border-color: #000000;
-            /* Example: Blue border */
-            border-style: solid;
-            /* Required for border to show */
-            border-width: 2px;
-            /* Optional: Adjust border thickness */
-        }
-
-        .layui-btn-normal {
-            background-color: #558ccf;
-            color: white;
-            border: none;
-            border-color: #000000;
-            /* Example: Blue border */
-            border-style: solid;
-            /* Required for border to show */
-            border-width: 2px;
-            /* Optional: Adjust border thickness */
-
-        }
-
-        .layui-btn:hover {
-            opacity: 0.9;
-        }
-
-        .error-body {
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .error-container {
-            text-align: center;
-            background: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            display: none;
-            /* Initially hidden */
-        }
-
-        .error-icon {
-            font-size: 100px;
-            color: #ff4d4f;
-        }
-
-        .error-title {
-            font-size: 24px;
-            margin: 20px 0;
-            color: #333;
-        }
-
-        .error-message {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .layui-btn {
-            margin-top: 20px;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            /* Smooth transition */
-        }
-
-        /* Button pressing effect */
-        .layui-btn:active {
-            transform: scale(0.95);
-            /* Slightly shrink the button */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            /* Add a shadow effect */
-        }
-
-        .success-container {
-            text-align: center;
-            background: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            display: none;
-            /* Initially hidden */
-        }
-
-        .success-icon {
-            font-size: 100px;
-            color: #52c41a;
-            /* Green color for success */
-        }
-
-        .success-title {
-            font-size: 24px;
-            margin: 20px 0;
-            color: #333;
-        }
-
-        .success-message {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .layui-btn {
-            margin-top: 20px;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            /* Smooth transition */
-        }
-    </style>
-    <script>
-        function changeLanguage(lang) {
-            const elements = document.querySelectorAll('[data-lang]');
-            elements.forEach(el => {
-                el.innerText = el.dataset[lang];
-            });
-        }
-    </script>
 </head>
 
 <body>
-    <div class="layui-container main-container " id="main-content">
-        <div style="text-align: right; margin-bottom: 10px;">
-            <button onclick="changeLanguage('ja')" class="layui-btn layui-btn-xs">日本語</button>
-            <button onclick="changeLanguage('en')" class="layui-btn layui-btn-xs">English</button>
+    <div class="top-container ">
+
+        <div class="header-box" data-key="login">
+
         </div>
-
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend data-lang data-ja="ログイン" data-en="Login">ログイン</legend>
-        </fieldset>
-
-        <button class="layui-btn layui-btn-primary layui-btn-fluid" 　 onclick="redirectToFaceAuthPage()" data-lang
-            data-ja="顔認証ログイン" data-en="Face Recognition Login">顔認証ログイン</button>
-
-        <form class="layui-form" style="margin-top: 20px;">
+        <form class="layui-form" action="">
             <div class="layui-form-item">
-                <label class="layui-form-label" data-lang data-ja="ユーザ" data-en="Username">ユーザ</label>
+                <label class="layui-form-label">Language</label>
                 <div class="layui-input-block">
-                    <input type="text" name="email" id="email" required lay-verify="required" placeholder="ユーザ"
-                        class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label" data-lang data-ja="パスワード" data-en="Password">パスワード</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" id="password" required lay-verify="required"
-                        placeholder="パスワード" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div style="display: flex; justify-content: space-between; gap: 4%;">
-                    <div style="flex: 1;">
-                        <button class="layui-btn layui-btn-normal layui-btn-fluid" id="loginBtn" onclick="onLogIn()"
-                            data-lang data-ja="ログイン" data-en="Login">ログイン</button>
-                    </div>
-                    <div style="flex: 1;">
-                        <button class="layui-btn layui-btn-normal layui-btn-fluid"
-                            onclick="redirectToFaceRegistrationPage()" data-lang data-ja="ログイン＋顔認証登録"
-                            data-en="Login + Register Face">ログイン＋顔認証登録</button>
-                    </div>
+                    <input type="radio" name="language" value="en" title="English" lay-filter="languageRadio">
+                    <input type="radio" name="language" value="ja" title="日本" lay-filter="languageRadio">
                 </div>
             </div>
         </form>
 
-        <p style="text-align: center; margin-top: 10px;">
-            <a href="#" style="text-decoration: underline;" data-lang data-ja="Register new user"
-                data-en="Register new user." onclick="redirectToRegisterPage()">パスワードをお忘れの場合は、こちらをクリック</a>
+        <div class="layui-container main-container " id="main-content">
 
-        </p>
-        <p style="text-align: center; margin-top: 10px;">
-            <a href="#" style="text-decoration: underline;" data-lang data-ja="パスワードをお忘れの場合は、こちらをクリック"
-                data-en="If you forgot your password, click here"
-                onclick="alert('under developement')">パスワードをお忘れの場合は、こちらをクリック</a>
 
-        </p>
+
+
+            <button class="layui-btn layui-btn-primary layui-btn-fluid" 　 onclick="redirectToFaceAuthPage()" data-lang
+                data-key="faceLogin"></button>
+
+            <form class="layui-form" style="margin-top: 20px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-key="username"></label>
+                    <div class="layui-input-block">
+                        <input 
+                         type="text" 
+                         name="email"
+                         id="email"
+                         required lay-verify="required" 
+                         placeholder="" 
+                         class="layui-input" 
+                         lay-reqtext ="Email cannot be empty"
+                         data-key="emailPlaceHolder">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" data-key="password"></label>
+                    <div class="layui-input-block">
+                        <input type="password" 
+                        name="password" 
+                        id="password" 
+                        required lay-verify="required"
+                        lay-reqtext ="Password cannot be empty"
+                        class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div style="display: flex; justify-content: space-between; gap: 4%;">
+                        <div style="flex: 1;">
+                            <button 
+                            class="layui-btn layui-btn-normal layui-btn-fluid" 
+                            id="loginBtn" 
+                            onclick="onLogIn()"
+                            lay-submit
+                            lay-filter = "loginBtn"
+                                
+                            data-key="login">ログイン</button>
+                        </div>
+                        <div style="flex: 1;">
+                            <button class="layui-btn layui-btn-normal layui-btn-fluid"
+                                onclick="redirectToFaceRegistrationPage()" data-key="faceRegister"></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <p style="text-align: center; margin-top: 10px;">
+                <a href="#" style="text-decoration: underline;" data-key="register"
+                    onclick="redirectToRegisterPage()"></a>
+
+            </p>
+            <p style="text-align: center; margin-top: 10px;">
+                <a href="#" style="text-decoration: underline;" data-key="forgetPassword"
+                    onclick="alert('under developement')">パスワードをお忘れの場合は、こちらをクリック</a>
+
+            </p>
+
+        </div>
+
     </div>
+
     <!-- Error Page (Hidden by Default) -->
     <div class="error-container" id="error-page">
         <div class="error-icon">&#9888;</div>
@@ -220,6 +117,98 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.js"></script>
     <script>
 
+        // Global variables
+        var savedLanguage = null;
+        var translations = {}; // Store translations globally
+
+        /**
+     * Load translations from a local JSON file or localStorage.
+     */
+        async function loadTranslations() {
+            const storedTranslations = localStorage.getItem('translations');
+            if (storedTranslations) {
+                // Use cached translations from localStorage
+                translations = JSON.parse(storedTranslations);
+                console.log('Translations loaded from localStorage:', translations);
+            } else {
+                try {
+                    // Fetch translations from local JSON file
+                    const response = await fetch('/locale/translation.json'); // Local JSON file in the project directory
+                    if (!response.ok) throw new Error('Failed to fetch translations.');
+                    translations = await response.json();
+                    localStorage.setItem('translations', JSON.stringify(translations)); // Cache translations in localStorage
+                    console.log('Translations loaded from local JSON file:', translations);
+                } catch (error) {
+                    console.error('Error loading translations:', error);
+
+                }
+            }
+        }
+
+        /**
+         * Apply translations to the page based on the selected language.
+         */
+        function applyTranslations(language) {
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach((element) => {
+                const key = element.getAttribute('data-key');
+                if (translations[key] && translations[key][language]) {
+                    element.textContent = translations[key][language];
+                }
+            });
+        }
+
+        /**
+         * Initialize the page: Load translations and apply the saved language.
+         */
+        async function initializePage() {
+            await loadTranslations(); // Load translations from local JSON file or localStorage
+
+            // Load saved language from localStorage or default to 'en'
+            savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+            // Pre-select the radio button based on the saved language
+            const radio = document.querySelector(`input[name="language"][value="${savedLanguage}"]`);
+            if (radio) {
+                radio.checked = true;
+            }
+
+            // Apply translations for the saved language
+            applyTranslations(savedLanguage);
+        }
+
+        /**
+        * Update the selected language globally and persist it.
+        */
+        function updateLanguage(newLanguage) {
+            savedLanguage = newLanguage; // Update global variable
+            localStorage.setItem('selectedLanguage', newLanguage); // Persist to localStorage
+            applyTranslations(savedLanguage); // Apply updated translations
+        }
+
+        // Initialize the page when DOM is ready
+        document.addEventListener("DOMContentLoaded", initializePage);
+
+
+
+        layui.use(['form'], function () {
+            var form = layui.form;
+
+            // Retrieve saved selection from localStorage and set the radio button
+            var savedLanguage = localStorage.getItem('selectedLanguage');
+            if (savedLanguage) {
+                document.querySelector(`input[name="language"][value="${savedLanguage}"]`).checked = true;
+                form.render('radio'); // Re-render radio buttons to apply the checked state
+            }
+
+            // Listen for language selection changes
+            form.on('radio(languageRadio)', function (data) {
+                console.log("Selected language:", data.value); // Logs the selected language
+                localStorage.setItem('selectedLanguage', data.value); // Save selection to localStorage
+                updateLanguage(data.value);
+            });
+        });
+
         async function onLogIn() {
             event.preventDefault(); // Prevent the form from refreshing the page
             layui.use('layer', async function () {
@@ -238,7 +227,10 @@
 
 
 
-                url = "http://192.168.29.177:8000/login"
+
+                // url = "http://192.168.29.177:8000/login"
+
+                url = "http://192.168.0.140:8080/login"
 
 
 
@@ -253,6 +245,10 @@
                     });
 
                     // Handle the response
+                    // code =1 ->success;2 -> "wrong password";
+                    // 3 -> no user found;
+                    // 4 -> face not register
+
                     if (response.ok) {
                         const data = await response.json();
                         if (data.code === "1") {
@@ -260,18 +256,27 @@
                             redirectToWelcomePage(email);
 
                         }
+                        else if (data.code == "4") { // code = 4 face not registered
+                            localStorage.setItem('email', email);
+                            redirectToFaceRegistrationPage()
+
+
+                        }
                         else {
-                            showErrorPage(data.message,data.code)
+                            if (data.code == "3") {
+                                localStorage.setItem('email', email);
+                            }
+                            showErrorPage(data.message, data.code)
                         }
                     } else {
                         //  alert("Error: " + response.status);
-                        showErrorPage("Error: " + response.status,"2")
+                        showErrorPage("Error: " + response.status, "2")
                     }
                 } catch (error) {
                     //   console.error('Error:', error);
                     // alert('Failed to send data');
                     console.error('Error:', error)
-                    showErrorPage(error,"2")
+                    showErrorPage(error, "2")
                 }
                 finally {
                     layer.close(loading);
@@ -312,7 +317,16 @@
             var stringToPass = username;
             window.location.href = "welcome.html?string=" + encodeURIComponent(username);
             console.log("Redirecting...");
-           
+
+
+
+        }
+
+        function redirectToFaceRegistrationPage() {
+
+            window.location.href = "face_registration.html";
+            console.log("Redirecting...");
+
 
 
         }

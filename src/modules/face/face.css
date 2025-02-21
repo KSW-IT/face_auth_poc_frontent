@@ -1,0 +1,7 @@
+.video {
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    /*for safari*/
+    width: 100%;
+    max-width: 600px;
+}

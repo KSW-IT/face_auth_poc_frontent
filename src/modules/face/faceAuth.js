@@ -1,37 +1,24 @@
 
+document.addEventListener('DOMContentLoaded', init);
 
-// Function to handle login
-export function onLogIn() {
-    let userName = document.getElementById("userName").value.trim();
-    let password = document.getElementById("password").value.trim();
-
-    if (!userName || !password) {
-        alert("Please enter both username and password.");
-        return;
-    }
-
-    redirectToWelcomePage(userName);
+function init(){
+    startCamera('faceAuth');
+    startLiveAuthentication();
+    
 }
 
-
-export function startCamera(videoElementId) {
+import {navigatePage} from "../../components/components.js";
+function startCamera(videoElementId) {
     navigator.mediaDevices.getUserMedia({ video: true })
-        .then((stream) => {
-            let video = document.getElementById(videoElementId);
-            video.srcObject = stream
-            video.onloadeddata = () => {
-                console.log("Camera is ready!");
-
-            }
-
+        .then(function (stream) {
+            document.getElementById(videoElementId).srcObject = stream;
         })
-        .catch((error) => {
+        .catch(function (error) {
             console.error("Error accessing the camera:", error);
         });
 }
 
-
-export function authenticateFace(videoElementId, apiUrl) {
+ function authenticateFace(videoElementId, apiUrl) {
     let video = document.getElementById(videoElementId);
 
 
@@ -68,7 +55,8 @@ export function authenticateFace(videoElementId, apiUrl) {
                 let authStatus = document.getElementById('authStatus');
                 if (data.code === "1") {
                     authStatus.innerText = "Face Authentication Success";
-                    redirectToWelcomePage(data.user_name.toString());
+                    navigatePage("welcome",data.user_name.toString(),"/")
+                    
                 } else {
                     authStatus.innerText = "Face Authentication Failed";
                 }
@@ -80,8 +68,8 @@ export function authenticateFace(videoElementId, apiUrl) {
     }, 'image/jpeg');
 }
 
-export function redirectToWelcomePage(userName) {
-    console.log(`Redirecting to welcome page for user: ${userName}`);
-    window.location.href = `welcome.html?string=${encodeURIComponent(userName)}`;
-}
+import {authenticateUrl} from "../../../js/constant.js"
+function startLiveAuthentication() {
 
+    setInterval(() => authenticateFace('faceAuth',authenticateUrl), 3000);
+}

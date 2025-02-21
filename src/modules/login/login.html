@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ログイン / Login</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="stylesheet" href="/layui-v2.9.23/layui/css/layui.css">
+        <link rel="stylesheet" href="../../../assets/css/appTheme.css">
+        <script type="module" src="../../../js/translationManager.js"></script>
+        <script type="module" src="../../../js/constant.js"></script>
+        <script type = "module" src = "../../components/components.js"></script>
+       
+    
+    </head>
+    <body>
+        <div class="top-container ">
+    
+            <div class="header-box" data-key="login">
+    
+            </div>
+            
+           
+            
+            <form class="layui-form" action="" method="POST">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Language</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="language" value="en" title="English" lay-filter="languageRadio">
+                        <input type="radio" name="language" value="ja" title="日本" lay-filter="languageRadio">
+                    </div>
+                </div>
+            </form>
+    
+            <div class="layui-container main-container " id="main-content">
+    
+    
+    
+    
+                <button 
+                class="layui-btn layui-btn-primary layui-btn-fluid" 　 
+        
+                type ="button"
+                
+                lay-on ="faceAuth"
+               
+            
+                data-key="faceLogin"></button>
+    
+                <form class="layui-form" style="margin-top: 20px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" data-key="username"></label>
+                        <div class="layui-input-block">
+                            <input 
+                             type="text" 
+                             name="email"
+                             id="email"
+                             required lay-verify="required" 
+                             placeholder="" 
+                             class="layui-input" 
+                             lay-reqtext ="Email cannot be empty"
+                             data-key="emailPlaceHolder">
+                        </div>
+                    </div>
+    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" data-key="password"></label>
+                        <div class="layui-input-block">
+                            <input type="password" 
+                            name="password" 
+                            id="password" 
+                            required lay-verify="required"
+                            lay-reqtext ="Password cannot be empty"
+                            class="layui-input">
+                        </div>
+                    </div>
+    
+                    <div class="layui-form-item">
+                        <div style="display: flex; justify-content: space-between; gap: 4%;">
+                            <div style="flex: 1;">
+                                <button 
+                                class="layui-btn layui-btn-normal layui-btn-fluid" 
+                                type="submit"
+                                id="loginBtn" 
+                                lay-submit
+                                lay-filter = "loginBtn"
+                                
+                                    
+                                data-key="login">ログイン</button>
+                            </div>
+                            <div style="flex: 1;">
+                                <button 
+                                class="layui-btn layui-btn-normal layui-btn-fluid"
+                                lay-on = "faceRegister" 
+                                data-key="faceRegister"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+    
+                <p style="text-align: center; margin-top: 10px;">
+                    <a href="#createUser"
+                     style="text-decoration: underline;"
+                     data-key="register"
+                     id="onCreateUser"
+                     >
+                    </a>
+                    
+                </p>
+                <p style="text-align: center; margin-top: 10px;">
+                    <a href="#" style="text-decoration: underline;" data-key="forgetPassword"
+                        onclick="alert('under developement')">パスワードをお忘れの場合は、こちらをクリック</a>
+    
+                </p>
+    
+            </div>
+    
+        </div>
+    
+        <div id="error-container"></div>
+    
+        <div class="success-container" id="success-page">
+            <div class="success-icon">&#10004;</div>
+            <div class="success-title">Success!</div>
+            <div class="success-message" id="success-message">Authentication request was processed successfully.</div>
+            <button class="layui-btn layui-btn-primary" 
+            lay-on ='onSuccessPageBtn'>Go Login</button>
+        </div>
+    
+        <script src="/layui-v2.9.23/layui/layui.js"></script>
+        <script type="module" src="login.js">
+        </script>
+        
+        
+    
+       
+        
+    </body>
+</html>

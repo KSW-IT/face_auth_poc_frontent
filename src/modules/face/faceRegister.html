@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Face Registration</title>
+    <link rel="stylesheet" href="/layui-v2.9.23/layui/css/layui.css">
+    <script src="/layui-v2.9.23/layui/layui.js"></script>
+    <link rel="stylesheet" href="/assets/css/appTheme.css">
+    <link rel="stylesheet" href="face.css">
+    <script type= "import" src = "../../../js/constant.js"></script>
+    <script type = "module" src = "../../../js/translationManager.js"></script>
+    <script type = "module" src= "faceRegister.js"></script>
+    <script type = "module" src = "../../components/components.js"></script>
+    
+</head>
+
+<body>
+    <div class="layui-container top-container" >
+        <div class="header-box" data-lang data-ja="顔登録" data-key="faceRegister">
+           
+          </div>
+    <div class="layui-container main-container" id="main-content">
+        <div style=" text-align: center;">
+           
+            <video class="video" id="registerFace" autoplay></video>
+
+            <br>
+
+
+            <div class="layui-form-item">
+                <div style="display: flex; flex-direction: column ; justify-content: space-between; gap: 4%;">
+
+                   
+                    
+                    <div style="flex: 1; ">
+                        <input 
+                        class="layui-input" 
+                        type="text" 
+                        name="email" 
+                        id="email" 
+                    
+                        required lay-verify="required"
+                        class="layui-input"></input>
+                    </div>
+                    <div style="flex: 1; ">
+                        <input 
+                        class="layui-input" 
+                        type="text" 
+                        name="password" 
+                        id="password" 
+                        required
+                        lay-verify="required" 
+                        placeholder="" class="layui-input"></input>
+                    </div>
+
+                    <div style="flex: 1; ">
+                        <button 
+                        class="layui-btn layui-btn-primary" 
+                        style="margin-top:20px; margin-bottom:10px ;" 
+                        lay-on="registerFace" 
+                        data-key="register">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div id="error-container"></div>
+  
+       
+   
+    
+</body>
+
+</html>

@@ -51,5 +51,21 @@
   "passwordNotEmpty": {
     "en": "Password cannot be empty",
     "ja": "パスワードは空欄にできません"
+  },
+
+  "faceAuth": {
+    "en": "Face Authentication",
+    "ja": "顔認証"
+  },
+  "enterEmail": {
+    "en": "Enter email",
+    "ja": "メールアドレスを入力"
+  },
+  "enterPassword": {
+    "en": "Enter password",
+    "ja": "パスワードを入力してください"
   }
+
+  
 }
+

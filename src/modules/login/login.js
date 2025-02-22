@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', init);
 
             // Handle the response
             // code =1 ->success;2 -> "wrong password";
-            // 3 -> no user found;
+            // 3 -> no user found,password expired;
             // 4 -> face not register
 
             if (response.ok) {
@@ -65,7 +65,13 @@ document.addEventListener('DOMContentLoaded', init);
                     if (data.code == "3") {
                         localStorage.setItem('email', email);
                     }
-                    showErrorPage(data.message, data.code)
+                    showErrorPage(data.message, data.code,function(){
+                        document.getElementById('errorBtn').addEventListener('click',function(){
+                            navigatePage("changePassword","","/src/modules/password/")
+    
+                        });
+
+                    });
                 }
             } else {
                 //  alert("Error: " + response.status);
@@ -89,121 +95,8 @@ document.addEventListener('DOMContentLoaded', init);
 
 }
 
- function validate() {
-    let userName = document.getElementById("userName").value.toString();
-    let password = document.getElementById("password").value.toString();
-    console.log("Username: " + userName + ", Password: " + password.toString())
-
-    if (userName === "test" && password === "test") {
-
-        return true;
-    }
-    else {
-        return false;
-    }
-
-
-
-}
-
- function redirectToFaceRegistrationPage() {
-    console.log("Redirecting...");
-    window.location.href = "face_registration.html";
-}
- function redirectToFaceAuthPage() {
-    console.log("Redirecting...");
-    window.location.href = "face_auth.html";
-}
- /*function navigatePage(path, username) {
-    const pathObject = getLastPath(path)
-    const pathName = pathObject.path;
-    const name = pathObject.name;
-    console.log(`path: ${pathName} name: ${name}`);
-    
-    if (!pageName || !username) {
-        console.error("Page name or username is missing.");
-        return;
-    }
-    
-    const url = `/${encodeURIComponent(pageName)}.html?string=${encodeURIComponent(username)}`;
-    console.log(`Redirecting to: ${url}`);
-    
-    window.location.href = url;
-}*/
-
-function navigatePage(pageName, username, directory = "") {
-    if (!pageName) {
-        console.error("Page name or username is missing.");
-        return;
-    }
-
-    // Handle dynamic directory
-    let  url ;
-    if(username.toString().trim()!==""){
-
-        url = `${directory}${encodeURIComponent(pageName)}.html?string=${encodeURIComponent(username)}`;
-        console.log(`Redirecting executed if part `);
-    }
-    else{
-        url = `${directory}${encodeURIComponent(pageName)}.html`;
-        console.log(`executed else part`);
-    }
-
-    
-
-    window.location.href = url;
-}
-
- function changeButtonText(newText) {
-    const button = document.getElementById("backBtn");
-    if (button) {
-        button.textContent = newText; // Update the button's text
-    }
-}
-
- function showErrorPage(errorMessage, code) {
-    
-    // code 1 =success, 2 = other error, 3 = password expired
-    // Hide the main content
-    document.getElementById('main-content').style.display = 'none';
-    // Show the error page
-    const errorPage = document.getElementById('error-page');
-    errorPage.style.display = 'block';
-    // Set the error message dynamically
-    document.getElementById('error-message').textContent = errorMessage;
-    if (code === '3') {
-        let newText = 'Change Password';
-        const button = document.getElementById("backBtn");
-        if (button) {
-            button.textContent = newText; // Update the button's text
-            button.addEventListener("click", redirectToChangePassword);
-        }
-
-    }
-    else {
-        let newText = 'Back';
-        const button = document.getElementById("backBtn");
-        if (button) {
-            button.textContent = newText; // Update the button's text
-            button.addEventListener("click", redirectToLoginPage);
-        }
-    }
-}
-
-
- function showSuccessMessage(successMessage) {
-    document.getElementById('main-content').style.display = 'none';
-    // Show the error page
-    const errorPage = document.getElementById('error-page');
-    errorPage.style.display = 'none';
-    // Set the error message dynamically
-    const successPage = document.getElementById('success-page');
-    successPage.style.display = 'block';
-    document.getElementById('success-message').textContent = successMessage;
-}
-
 import {printTestMsg,initializePage,updateLanguage} from '../../../js/translationManager.js';
-import {loadErrorPage,hideErrorPage} from "../../components/components.js"
+import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessPage, hideErrorPage,changeErrorButtonName, hideSuccessPage,goBack} from "../../components/components.js"
  function init(){
     layui.use(['form','util'], function () {
         var form = layui.form;
@@ -256,7 +149,7 @@ import {loadErrorPage,hideErrorPage} from "../../components/components.js"
 
 function onCreateUser(){
     document.getElementById('onCreateUser').addEventListener('click',()=>{
-        console.log("clicked on faceRegister");
+        console.log("clicked on onCreateUser");
         navigatePage('createUser',"","/src/modules/createUser/");
         
 

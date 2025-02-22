@@ -7,66 +7,89 @@
     <title>Register User</title>
     <link rel="stylesheet" href = "../../../layui-v2.9.23/layui/css/layui.css">
     <script src = "../../../layui-v2.9.23/layui/layui.js"></script>
-
     <link rel = "stylesheet" href = "../../../assets/css/appTheme.css">
     <script type = "module" src = "../../../js/constant.js"></script>
     <script type = "module" src = "../../../js/translationManager.js"></script>
-
-    
-       
+    <script type = "module" src = "../../components/components.js"></script>
 
 </head>
 
 <body>
 
     <div class="layui-container top-container" >
-        <div class="header-box"  data-ja="ユーザー登録" data-en="Register User">
-            ユーザー登録
+        <div class="header-box"  data-key="createUser">
+           
           </div>
         <div class="layui-container main-container" id="main-content">
-
-
-           
-    
-    
-    
             <form class="layui-form" style="margin-top: 20px;">
     
                 <div class="layui-form-item">
-                    <label class="layui-form-label" data-en="username">ユーザー名</label>
+                    <label 
+                    class="layui-form-label" 
+                    data-key="username"></label>
                     <div class="layui-input-block">
-                        <input type="text" name="userName" id="userName" required lay-verify="required"
-                            placeholder="ユーザー名を入力してください" class="layui-input">
+                        <input type="input"
+                         name="userName" 
+                         id="userName" 
+                         lay-filter = "userName"
+                         required lay-verify="userName"
+                         placeholder="" 
+                         class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" data-en="email">メール</label>
+                    <label class="layui-form-label" 
+                    data-key="email"></label>
                     <div class="layui-input-block">
-                        <input type="text" name="email" id="email" required lay-verify="required" placeholder="メールアドレスを入力"
-                            class="layui-input">
+                        <input type="input" 
+                        name="email" 
+                        id="email" 
+                        lay-filter = "email"
+                        required lay-verify="email" 
+                        class="layui-input">
                     </div>
                 </div>
     
                 <div class="layui-form-item">
-                    <label class="layui-form-label" data-en="Password">パスワード</label>
+                    <label 
+                    class="layui-form-label" 
+                    data-key="password"></label>
                     <div class="layui-input-block">
-                        <input type="password" name="password" id="password" required lay-verify="required"
-                            placeholder="パスワードを入力してください" class="layui-input">
+                        <input 
+                        type="input" 
+                        name="password" 
+                        id="password" 
+                        lay-filter = "password"
+                        required lay-verify="password"
+                        placeholder="パスワードを入力してください" 
+                        class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" data-lang data-ja="Password" data-en="Password">パスワードを認証する</label>
+                    <label class="layui-form-label" 
+                    
+                    data-key="confirmPassword"></label>
                     <div class="layui-input-block">
-                        <input type="conPassword" name="conPassword" id="conPassword" required lay-verify="required"
-                            placeholder="パスワード再入力" class="layui-input">
+                        <input 
+                        type="input" 
+                        name="conPassword" 
+                        id="conPassword" 
+                        lay-filter = "conPassword"
+                        required lay-verify="conPassword"
+                        placeholder="パスワード再入力" 
+                        class="layui-input">
                     </div>
                 </div>
     
                 <div class="layui-form-item">
                     <div style="display: flex; justify-content: space-between; gap: 4%;">
                         <div style="flex: 1;">
-                            <button class="layui-btn layui-btn-normal layui-btn-fluid" id="registerBtn"
-                                onclick="onRegister()" data-en="register">登録する</button>
+                            <button 
+                            class="layui-btn layui-btn-normal layui-btn-fluid" 
+                            id="onCreateUserBtn"
+                            lay-submit
+                            lay-filter = "formSubmit"
+                            data-key="createUser">登録する</button>
                         </div>
     
                     </div>
@@ -79,157 +102,11 @@
 
    
     <!-- Error Page (Hidden by Default) -->
-    <div class="error-container" id="error-page">
-        <div class="error-icon">&#9888;</div>
-        <div class="error-title">Error!</div>
-        <div class="error-message" id="error-message">We encountered an issue while processing your request. Please try
-            again later.</div>
-        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
-    </div>
+    <div id="error-container"></div>
+    <div id="success-container"></div>
+    <script type = "module" src = "createUser.js"></script>
 
-    <div class="success-container" id="success-page">
-        <div class="success-icon">&#10004;</div>
-        <div class="success-title">Success!</div>
-        <div class="success-message" id="success-message">Authentication request was processed successfully.</div>
-        <button class="layui-btn layui-btn-primary" onclick="redirectToLoginPage()">Back</button>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.js"></script>
-    <script>
-
-
-       async function onRegister() {
-            event.preventDefault(); // Prevent the form from refreshing the page
-            layui.use('layer', async function () {
-
-                const layer = layui.layer;
-                const loading = layer.load(2); // Show loading spinner
-
-
-                let username = document.getElementById('userName').value;
-                let email = document.getElementById('email').value;
-                let password = document.getElementById('password').value;
-                let conPassword = document.getElementById('conPassword').value;
-
-                
-                const payload = {
-                    userName: username,
-                    password: password,
-                    email: email,
-
-                };
-
-
-
-              //  url = "http://192.168.29.177:8000/registerUser"
-                  url= "http://192.168.0.140:8080/registerUser"
-
-
-
-
-
-                try {
-                    // Send the POST request
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-
-                    // Handle the response
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.code === "1") {
-                            showSuccessMessage(data.message)
-
-                        }
-                        else {
-                            showErrorPage(data.message)
-                        }
-                    } else {
-                        //  alert("Error: " + response.status);
-                        showErrorPage("Error: " + response.status)
-                    }
-                } catch (error) {
-                    //   console.error('Error:', error);
-                    // alert('Failed to send data');
-                    console.error('Error:', error)
-                    showErrorPage(error)
-                }
-                finally {
-                    layer.close(loading);
-                }
-
-
-            });
-
-
-
-
-        }
-
-        function validate() {
-            let userName = document.getElementById("userName").value.toString();
-            let password = document.getElementById("password").value.toString();
-            console.log("Username: " + userName + ", Password: " + password.toString())
-
-            if (userName === "test" && password === "test") {
-
-                return true;
-            }
-            else {
-                return false;
-            }
-
-
-
-        }
-        function redirectToFaceRegistrationPage() {
-            console.log("Redirecting...");
-            window.location.href = "face_registration.html";
-        }
-
-        function redirectToLoginPage() {
-            console.log("Redirecting...");
-            window.location.href = "index.html";
-        }
-        function redirectToFaceAuthPage() {
-            console.log("Redirecting...");
-            window.location.href = "face_auth.html";
-        }
-        function redirectToWelcomePage(username) {
-            var stringToPass = username;
-            window.location.href = "welcome.html?string=" + encodeURIComponent(stringToPass);
-            console.log("Redirecting...");
-            window.location.href = "welcome.html";
-
-
-        }
-
-        // Function to display the error page
-        function showErrorPage(errorMessage) {
-            // Hide the main content
-            document.getElementById('main-content').style.display = 'none';
-            // Show the error page
-            const errorPage = document.getElementById('error-page');
-            errorPage.style.display = 'block';
-            // Set the error message dynamically
-            document.getElementById('error-message').textContent = errorMessage;
-        }
-
-        function showSuccessMessage(successMessage) {
-            document.getElementById('main-content').style.display = 'none';
-            // Show the error page
-            const errorPage = document.getElementById('error-page');
-            errorPage.style.display = 'none';
-            // Set the error message dynamically
-            const successPage = document.getElementById('success-page');
-            successPage.style.display = 'block';
-            document.getElementById('success-message').textContent = successMessage;
-        }
-    </script>
+    
 </body>
 
 </html>

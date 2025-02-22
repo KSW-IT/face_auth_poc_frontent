@@ -60,6 +60,9 @@ export async function initializePage() {
     applyTranslations(savedLanguage);
 }
 
+export async function getCurrentLanguage(){
+    return localStorage.getItem('selectedLanguage') || 'en';
+}
 export function updateLanguage(newLanguage) {
     savedLanguage = newLanguage; // Update global variable
     localStorage.setItem('selectedLanguage', newLanguage); // Persist to localStorage

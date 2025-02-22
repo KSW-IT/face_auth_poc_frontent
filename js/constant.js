@@ -9,4 +9,5 @@
  export const registerUrl =baseUrl+"/register2";
  export const  authenticateUrl = baseUrl+"/authenticate";
  export const  loginUrl = baseUrl+"/login";
+ export const  createUserUrl = `${baseUrl}/registerUser`;
 

@@ -64,7 +64,51 @@
   "enterPassword": {
     "en": "Enter password",
     "ja": "パスワードを入力してください"
+  },
+  "createUser":{
+    "en": "Create User",
+    "ja": "ユーザーを作成"
+  },
+  "enterUsername":{
+    "en": "Enter Username",
+    "ja": "ユーザー名を入力してください"
+  },
+  "confirmPassword":{
+    "en": "Confirm Password",
+    "ja": "パスワード再入力"
+  },
+  
+  "email":{
+    "en": "Email",
+    "ja": "メール"
+  },
+  "emailValid":{
+    "en":"Invalid email",
+    "ja":"無効なメールです。"
+  },
+  "passwordInvalidMessage":{
+    "en":"Password must be 4-16 characters long and contain only letters, numbers, and underscores",
+    "ja":"ユーザー名は4〜16文字で、文字、数字、アンダースコアのみで構成する必要があります"
+  },
+  "emailInvalidMessage":{
+    "en":"Incorrect email format",
+    "ja":"メールアドレスは別にできません"
+  },
+  "emptyUser":{
+    "en":"Username cannot be empty.",
+    "ja":"ユーザー名は空にできません"
   }
+  ,
+  "usernameInvalidMessage":{
+    "en":"Username must be 4-16 characters long and contain only letters, numbers, and underscores",
+    "ja":"ユーザー名は4〜16文字で、文字、数字、アンダースコアのみで構成する必要があります。"
+  },
+  "passwordNotMatch":{
+    "en":"Password does not match",
+    "ja":"パスワードが一致しません。"
+  }
+  
+
 
   
 }

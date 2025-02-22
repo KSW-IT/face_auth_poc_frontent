@@ -9,12 +9,34 @@ export async function loadErrorPage(){
    
    }
 
+export async function loadSuccessPage(){
+  return  fetch("../../components/success.html") // Make sure error.html contains only the error message div
+       .then(response => response.text())
+       .then(html => {
+         document.getElementById("success-container").innerHTML = html;
+       })
+       .catch(error => console.error("Error loading Success page:", error));
+   
+   }
+
+
+
   export function hideErrorPage() {
     
     document.getElementById('main-content').style.display = 'block';
+    document.getElementById('success-page').style.display = 'none';
     document.getElementById('error-page').style.display = 'none';
 
     
+}
+
+export function hideSuccessPage() {
+    
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('success-page').style.display = 'none';
+  document.getElementById('error-page').style.display = 'none';
+
+  
 }
 
   export function changeErrorButtonName(name){
@@ -51,6 +73,18 @@ export async function loadErrorPage(){
     } */
 }
 
+export function showSuccessMessage(successMessage,code,callback) {
+  document.getElementById('main-content').style.display = 'none';
+  // Show the error page
+  const errorPage = document.getElementById('error-page');
+  errorPage.style.display = 'none';
+  // Set the error message dynamically
+  const successPage = document.getElementById('success-page');
+  successPage.style.display = 'block';
+  document.getElementById('success-message').textContent = successMessage;
+  callback(code);
+}
+
  export function navigatePage(pageName, username, directory = "") {
   if (!pageName) {
       console.error("Page name or username is missing.");
@@ -73,3 +107,30 @@ export async function loadErrorPage(){
 
   window.location.href = url;
 }
+
+export function goBack() {
+    window.history.back(); // Goes to the previous page
+}
+
+function preventBack() {
+  window.history.pushState(null, "", window.location.href);
+  window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+  };
+}
+
+// Function to prevent form resubmission on refresh
+export function preventResubmit() {
+  if (window.performance && window.performance.navigation.type === 2) {
+      location.reload(); // Forces a fresh page load
+  }
+}
+
+// Function to prevent both
+export function preventBackAndResubmit() {
+  preventBack();
+  preventResubmit();
+}
+
+// Run automatically when the script loads
+//preventBackAndResubmit();

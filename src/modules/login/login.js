@@ -45,8 +45,10 @@ document.addEventListener('DOMContentLoaded', init);
             // code =1 ->success;2 -> "wrong password";
             // 3 -> no user found,password expired;
             // 4 -> face not register
+            navigatePage("changePassword","","/src/modules/password/")
 
             if (response.ok) {
+                navigatePage("changePassword","","/src/modules/password/")
                 const data = await response.json();
                 if (data.code === "1") {
                     localStorage.setItem('email', email);
@@ -95,12 +97,29 @@ document.addEventListener('DOMContentLoaded', init);
 
 }
 
-import {printTestMsg,initializePage,updateLanguage} from '../../../js/translationManager.js';
+import {printTestMsg,initializePage,updateLanguage,getCurrentLanguage,loadTranslations} from '../../../js/translationManager.js';
 import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessPage, hideErrorPage,changeErrorButtonName, hideSuccessPage,goBack} from "../../components/components.js"
- function init(){
+ async function init(){
+
+    const savedLanguage = await getCurrentLanguage();
+    const translations = await loadTranslations();
     layui.use(['form','util'], function () {
         var form = layui.form;
         var util = layui.util;
+
+        form.verify({
+            email: function(value) {
+                if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                    return translations["emailInvalidMessage"][savedLanguage];
+                }
+            },
+            password: function(value){
+                if (!/^[a-zA-Z0-9_]{4,16}$/.test(value)) {
+                    return translations["passwordInvalidMessage"][savedLanguage];
+                }
+            }
+            
+        });
         
         
 

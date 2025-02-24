@@ -1,3 +1,21 @@
+import {initializePage,loadTranslations,getCurrentLanguage} from '../../../js/translationManager.js';
+import {changePasswordUrl} from '../../../js/constant.js';
+document.addEventListener('DOMContentLoaded', init);
+
+async function init(){
+    initializePage();
+    const savedLanguage = await getCurrentLanguage();
+    const translations = await loadTranslations();
+    document.getElementById('enterCurrentPassword').placeholder=translations["enterCurrentPassword"][savedLanguage]
+    document.getElementById('enterNewPassword').placeholder=translations["enterNewPassword"][savedLanguage]
+    document.getElementById('confirmPassword').placeholder=translations["confirmPassword"][savedLanguage]
+
+    layui.use(function(){
+        
+    });
+    
+    
+}
 async function onChangePassword() {
     const email = localStorage.getItem('email');
     console.debug("Email: "+email);
@@ -71,6 +89,8 @@ async function onChangePassword() {
 
 
 }
+
+
 
 
 

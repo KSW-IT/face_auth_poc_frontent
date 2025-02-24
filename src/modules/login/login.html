@@ -52,25 +52,27 @@
                         <label class="layui-form-label" data-key="username"></label>
                         <div class="layui-input-block">
                             <input 
-                             type="text" 
+                             type="input" 
                              name="email"
                              id="email"
-                             required lay-verify="required|email" 
+                             lay-filter ="email"
+                             required lay-verify="email" 
                              placeholder="" 
                              class="layui-input" 
-                             lay-reqtext ="Email cannot be empty"
-                             data-key="emailPlaceHolder">
+                             
+                             >
                         </div>
                     </div>
     
                     <div class="layui-form-item">
                         <label class="layui-form-label" data-key="password"></label>
                         <div class="layui-input-block">
-                            <input type="password" 
+                            <input type="input" 
                             name="password" 
                             id="password" 
-                            required lay-verify="required"
-                            lay-reqtext ="Password cannot be empty"
+                            lay-filter ="password"
+                            required lay-verify="password"
+                           
                             class="layui-input">
                         </div>
                     </div>
@@ -92,6 +94,7 @@
                                 <button 
                                 class="layui-btn layui-btn-normal layui-btn-fluid"
                                 lay-on = "faceRegister" 
+            
                                 data-key="faceRegister"></button>
                             </div>
                         </div>

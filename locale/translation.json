@@ -106,10 +106,37 @@
   "passwordNotMatch":{
     "en":"Password does not match",
     "ja":"パスワードが一致しません。"
+  },
+  "currentPassword":{
+    "en":"Current Password",
+    "ja":"現在のパスワード"
+  },
+  "enterCurrentPassword":{
+    "en":"Enter current password",
+    "ja":"現在のパスワードを入力してください。"
+  },
+  "newPassword":{
+    "en":"New password",
+    "ja":"新しいパスワード。"
+  },
+  "enterNewPassword":{
+    "en":"Enter new password",
+    "ja":"新しいパスワードを入力してください。"
+  },
+  "formSubmit":{
+    "en":"Submit",
+    "ja":"提出する"
+  },
+  "changePassword":{
+    "en":"Change Password",
+    "ja":"パスワードを変更する"
   }
-  
 
-
-  
 }
+  
+  
+
+
+  
+
 

@@ -10,4 +10,5 @@
  export const  authenticateUrl = baseUrl+"/authenticate";
  export const  loginUrl = baseUrl+"/login";
  export const  createUserUrl = `${baseUrl}/registerUser`;
+ export const  changePasswordUrl = `${baseUrl}/changePassword`;
 

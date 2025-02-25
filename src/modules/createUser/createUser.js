@@ -102,9 +102,10 @@ async function sendData() {
         let password = document.getElementById('password').value;
         let conPassword = document.getElementById('conPassword').value;
 
-        
+        //userName: username, server
+        //username: username, local
         const payload = {
-            username: username,
+            userName: username,
             password: password,
             email: email,
 

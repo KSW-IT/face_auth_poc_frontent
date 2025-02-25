@@ -45,31 +45,64 @@ document.addEventListener('DOMContentLoaded', init);
             // code =1 ->success;2 -> "wrong password";
             // 3 -> no user found,password expired;
             // 4 -> face not register
-            navigatePage("changePassword","","/src/modules/password/")
+            // 5 -> password expired
+           
 
             if (response.ok) {
-                navigatePage("changePassword","","/src/modules/password/")
+               
                 const data = await response.json();
                 if (data.code === "1") {
                     localStorage.setItem('email', email);
                    // redirectToWelcomePage(email);
-                   navigatePage("welcome","","")
+                  
+                   navigatePage("welcome","","/");
+
+                }
+                else if(data.code == "2"){
+
+                }
+                else if(data.code =="3"){
+
+                    showErrorPage(data.message,"2",function(){
+                   
+                        document.getElementById('errorBtn').addEventListener('click',function(){
+                            hideErrorPage();
+    
+                        });
+    
+                        });
 
                 }
                 else if (data.code == "4") { // code = 4 face not registered
                     localStorage.setItem('email', email);
                    // redirectToFaceRegistrationPage()
-                   navigatePage("face_registration","","")
+                   navigatePage("faceRegister","","/src/modules/face/")
+                  
+                   
 
+
+                } 
+                else if(data.code == "5"){
+                   
+                    localStorage.setItem('email', email);
+                    changeErrorButtonName("Go to change Password")
+                    showErrorPage(data.message, data.code,function(){
+                        document.getElementById('errorBtn').addEventListener('click',function(){
+
+                            navigatePage("changePassword","","/src/modules/password/")
+    
+                        });
+
+                    });
 
                 }
                 else {
-                    if (data.code == "3") {
+                    if (data.code == "4") {
                         localStorage.setItem('email', email);
                     }
                     showErrorPage(data.message, data.code,function(){
                         document.getElementById('errorBtn').addEventListener('click',function(){
-                            navigatePage("changePassword","","/src/modules/password/")
+                           hideErrorPage();
     
                         });
 
@@ -77,13 +110,28 @@ document.addEventListener('DOMContentLoaded', init);
                 }
             } else {
                 //  alert("Error: " + response.status);
-                showErrorPage("Error: " + response.status, "2")
+               // showErrorPage("Error: " + response.status, "2")
+
+                showErrorPage(data.message, data.code,function(){
+                    document.getElementById('errorBtn').addEventListener('click',function(){
+                       hideErrorPage()
+
+                    });
+
+                });
             }
         } catch (error) {
             //   console.error('Error:', error);
             // alert('Failed to send data');
             console.error('Error:', error)
-            showErrorPage(error, "2")
+           // showErrorPage(error, "2")
+           showErrorPage(error, "2",function(){
+            document.getElementById('errorBtn').addEventListener('click',function(){
+              hideErrorPage()
+
+            });
+
+        });
         }
         finally {
             layer.close(loading);
@@ -101,25 +149,22 @@ import {printTestMsg,initializePage,updateLanguage,getCurrentLanguage,loadTransl
 import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessPage, hideErrorPage,changeErrorButtonName, hideSuccessPage,goBack} from "../../components/components.js"
  async function init(){
 
-    const savedLanguage = await getCurrentLanguage();
+    
     const translations = await loadTranslations();
-    layui.use(['form','util'], function () {
+   
+    printTestMsg();
+    initializePage();
+    loadErrorPage();
+    loadSuccessPage();
+    onCreateUser();
+
+    layui.use(['form','util'], async function () {
         var form = layui.form;
         var util = layui.util;
+       
 
-        form.verify({
-            email: function(value) {
-                if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-                    return translations["emailInvalidMessage"][savedLanguage];
-                }
-            },
-            password: function(value){
-                if (!/^[a-zA-Z0-9_]{4,16}$/.test(value)) {
-                    return translations["passwordInvalidMessage"][savedLanguage];
-                }
-            }
-            
-        });
+        
+        
         
         
 
@@ -158,11 +203,22 @@ import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessP
 
         });
 
+        form.verify({
+            email: function(value) {
+                if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                    return translations["emailInvalidMessage"][savedLanguage];
+                }
+            },
+            password: function(value){
+                if (!/^[a-zA-Z0-9_]{4,16}$/.test(value)) {
+                    return translations["passwordInvalidMessage"][savedLanguage];
+                }
+            }
+            
+        });
+        
+
     });
-    printTestMsg();
-    initializePage();
-    loadErrorPage();
-    onCreateUser();
 
 }
 

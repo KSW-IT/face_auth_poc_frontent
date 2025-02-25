@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', init);
 import {initializePage,loadTranslations} from '../../../js/translationManager.js';
-import {loadErrorPage,changeErrorButtonName,hideErrorPage,showErrorPage,navigatePage} from '../../components/components.js';
+import {loadErrorPage,changeErrorButtonName,hideErrorPage,showErrorPage,navigatePage, loadSuccessPage} from '../../components/components.js';
 async function init(){
     initializePage();
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
@@ -31,7 +31,8 @@ async function init(){
 
     });
 
-    loadErrorPage();
+    await loadErrorPage();
+    await loadSuccessPage();
     changeErrorButtonName('Close');
 
 
@@ -94,7 +95,15 @@ async function registerFace() {
                     //  showPopup(data)
                     // redirectToLoginPage()
                     if (data.code === "1") {
-                        showSuccessMessage(data.message)
+                        showSuccessMessage(data.message,"1",function(){
+                       
+                            document.getElementById('successBtn').addEventListener('click',function(){
+                                goBack();
+        
+                            });
+                           
+    
+                        });
 
                     }
                     else {
@@ -104,11 +113,12 @@ async function registerFace() {
                             code,
                             (code) =>{
                                 if(code ==="3"){
-                                    let newText = 'Change Password';
+                                    let newText = 'Re register face';
                                     const button = document.getElementById("errorBtn");
                                     button.textContent=newText;
                                     button.addEventListener("click",() =>{
-                                    navigatePage("change_password","","/");
+                                        hideErrorPage();
+                                        registerFace();
 
                                     });
                                    
@@ -127,13 +137,14 @@ async function registerFace() {
                 .catch(error => {
                     const code ='2';
                     console.error('Error:', error)
-                    showErrorPage(error.toString(),
-                        '2',
-                        (code) => {
+                    showErrorPage(error,"2",function(){
+                   
+                        document.getElementById('errorBtn').addEventListener('click',function(){
                             hideErrorPage();
-
-
-                    });
+    
+                        });
+    
+                        });
                 })
                 .finally(() => {
                     layer.close(loading); // Hide loading spinner

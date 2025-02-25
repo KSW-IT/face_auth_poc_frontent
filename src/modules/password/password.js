@@ -1,20 +1,32 @@
 import {initializePage,loadTranslations,getCurrentLanguage} from '../../../js/translationManager.js';
 import {changePasswordUrl} from '../../../js/constant.js';
+import {showErrorPage,showSuccessMessage,navigatePage,loadErrorPage,loadSuccessPage, hideErrorPage,changeErrorButtonName, hideSuccessPage,goBack} from '../../components/components.js';
 document.addEventListener('DOMContentLoaded', init);
 
 async function init(){
+    await loadErrorPage();
+    await loadSuccessPage();
+
     initializePage();
+    
     const savedLanguage = await getCurrentLanguage();
     const translations = await loadTranslations();
-    document.getElementById('enterCurrentPassword').placeholder=translations["enterCurrentPassword"][savedLanguage]
-    document.getElementById('enterNewPassword').placeholder=translations["enterNewPassword"][savedLanguage]
+    document.getElementById('curPassword').placeholder=translations["enterCurrentPassword"][savedLanguage]
+    document.getElementById('newPassword').placeholder=translations["enterNewPassword"][savedLanguage]
     document.getElementById('confirmPassword').placeholder=translations["confirmPassword"][savedLanguage]
 
     layui.use(function(){
         
+        const form = layui.form;
+        form.on('submit(formSubmit)',function(data){
+            console.log("change password is called.");
+            onChangePassword();
+        })
+
     });
+
     
-    
+   
 }
 async function onChangePassword() {
     const email = localStorage.getItem('email');
@@ -30,7 +42,7 @@ async function onChangePassword() {
 
 
         let password = document.getElementById('newPassword').value;
-        let conPassword = document.getElementById('conPassword').value;
+        //let conPassword = document.getElementById('conPassword').value;
         let curPassword = document.getElementById('curPassword').value;
         
 
@@ -41,9 +53,11 @@ async function onChangePassword() {
 
         };
 
+        console.log(`${email},${curPassword},${password}` );
 
 
-        url = "http://192.168.0.140:8080/changePassword"
+
+       var url = changePasswordUrl;
       //  url= "http://192.168.0.140:8080/login"
 
 
@@ -51,10 +65,11 @@ async function onChangePassword() {
         try {
             // Send the POST request
             const response = await fetch(url, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                
                 body: JSON.stringify(payload)
             });
 
@@ -62,21 +77,50 @@ async function onChangePassword() {
             if (response.ok) {
                 const data = await response.json();
                 if (data.code === "1") {
-                    showSuccessMessage(data.message)
+                    showSuccessMessage(data.message,"1",function(){
+                       
+                        document.getElementById('successBtn').addEventListener('click',function(){
+                            goBack();
+    
+                        });
+                       
+
+                    });
 
                 }
                 else {
-                    showErrorPage(data.message)
+                    showErrorPage(data.message,"2",function(){
+                   
+                        document.getElementById('errorBtn').addEventListener('click',function(){
+                            hideErrorPage();
+    
+                        });
+    
+                        });
                 }
             } else {
                 //  alert("Error: " + response.status);
-                showErrorPage("Error: " + response.status)
+                showErrorPage(data.message,"2",function(){
+                   
+                    document.getElementById('errorBtn').addEventListener('click',function(){
+                        hideErrorPage();
+
+                    });
+
+                    });
             }
         } catch (error) {
             //   console.error('Error:', error);
             // alert('Failed to send data');
             console.error('Error:', error)
-            showErrorPage(error)
+            showErrorPage(error,"2",function(){
+                   
+                document.getElementById('errorBtn').addEventListener('click',function(){
+                    hideErrorPage();
+
+                });
+
+                });
         }
         finally {
             layer.close(loading);

@@ -10,7 +10,7 @@ export async function loadErrorPage(){
    }
 
 export async function loadSuccessPage(){
-  return  fetch("../../components/success.html") // Make sure error.html contains only the error message div
+  return  fetch("../../components/success.html") 
        .then(response => response.text())
        .then(html => {
          document.getElementById("success-container").innerHTML = html;

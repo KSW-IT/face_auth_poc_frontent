@@ -58,12 +58,10 @@ document.addEventListener('DOMContentLoaded', init);
                    navigatePage("welcome","","/");
 
                 }
-                else if(data.code == "2"){
+               
+                else if(data.code =="3"|| data.code == "2"){
 
-                }
-                else if(data.code =="3"){
-
-                    showErrorPage(data.message,"2",function(){
+                    showErrorPage(data.message,data.code,function(){
                    
                         document.getElementById('errorBtn').addEventListener('click',function(){
                             hideErrorPage();
@@ -77,6 +75,8 @@ document.addEventListener('DOMContentLoaded', init);
                     localStorage.setItem('email', email);
                    // redirectToFaceRegistrationPage()
                    navigatePage("faceRegister","","/src/modules/face/")
+                   localStorage.setItem('fromLogin','1')
+                   console.log("navigate from login as the face is not registered.");
                   
                    
 
@@ -152,11 +152,19 @@ import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessP
     
     const translations = await loadTranslations();
    
-    printTestMsg();
-    initializePage();
-    loadErrorPage();
-    loadSuccessPage();
-    onCreateUser();
+   // printTestMsg();
+    await initializePage();
+
+   
+   await loadErrorPage();
+   await loadSuccessPage();
+    await onCreateUser();
+
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    
+    document.getElementById('email').placeholder=translations["enterEmail"][savedLanguage]
+    document.getElementById('password').placeholder=translations["enterPassword"][savedLanguage]
+    
 
     layui.use(['form','util'], async function () {
         var form = layui.form;
@@ -180,6 +188,10 @@ import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessP
             console.log("Selected language:", data.value); // Logs the selected language
             localStorage.setItem('selectedLanguage', data.value); // Save selection to localStorage
             updateLanguage(data.value);
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    
+            document.getElementById('email').placeholder=translations["enterEmail"][savedLanguage]
+            document.getElementById('password').placeholder=translations["enterPassword"][savedLanguage]
         });
         form.on('submit(loginBtn)',function (data){
             onLogIn()
@@ -194,6 +206,10 @@ import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessP
             faceRegister: function(){
             console.log("clicked on faceRegister");
             navigatePage('faceRegister',"","/src/modules/face/");
+
+            
+            localStorage.setItem('fromLogin','2')
+            console.log("navigate by pressing face register.");
 
             },
             onErrorPageBtn:function(){
@@ -222,7 +238,7 @@ import {loadErrorPage,showErrorPage,showSuccessMessage,navigatePage,loadSuccessP
 
 }
 
-function onCreateUser(){
+async function onCreateUser(){
     document.getElementById('onCreateUser').addEventListener('click',()=>{
         console.log("clicked on onCreateUser");
         navigatePage('createUser',"","/src/modules/createUser/");

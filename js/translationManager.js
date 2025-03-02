@@ -1,6 +1,9 @@
 
  export var savedLanguage = null;
  export var translations = {}; //
+
+
+
 export function printTestMsg(){
     layui.use(['layer'],function(){
         const layer = layui.layer;
@@ -18,10 +21,10 @@ export async function loadTranslations() {
     } else {
         try {
             // Fetch translations from local JSON file
-            const response = await fetch('/locale/translation.json'); // Local JSON file in the project directory
+            const response = await fetch('http://localhost:8081/face_login/js/translation.json'); // Local JSON file in the project directory
             if (!response.ok) throw new Error('Failed to fetch translations.');
             translations = await response.json();
-            localStorage.setItem('translations', JSON.stringify(translations)); // Cache translations in localStorage
+            localStorage.setItem('.translations', JSON.stringify(translations)); // Cache translations in localStorage
             console.log('Translations loaded from local JSON file:', translations);
             return translations;
         } catch (error) {

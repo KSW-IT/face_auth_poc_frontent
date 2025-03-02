@@ -95,11 +95,11 @@ export function showSuccessMessage(successMessage,code,callback) {
   let  url ;
   if(username.toString().trim()!==""){
 
-      url = `${directory}${encodeURIComponent(pageName)}.html?string=${encodeURIComponent(username)}`;
+      url = `/face_login/${directory}${encodeURIComponent(pageName)}.html?string=${encodeURIComponent(username)}`;
       console.log(`Redirecting executed if part `);
   }
   else{
-      url = `${directory}${encodeURIComponent(pageName)}.html`;
+      url = `/face_login/${directory}${encodeURIComponent(pageName)}.html`;
       console.log(`executed else part`);
   }
 

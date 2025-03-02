@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', init);
 import {initializePage,loadTranslations} from '../../../js/translationManager.js';
-import {loadErrorPage,changeErrorButtonName,hideErrorPage,showErrorPage,navigatePage, loadSuccessPage} from '../../components/components.js';
+import {loadErrorPage,goBack,showSuccessMessage,changeErrorButtonName,hideErrorPage,showErrorPage,navigatePage, loadSuccessPage} from '../../components/components.js';
 async function init(){
     initializePage();
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
@@ -10,11 +10,13 @@ async function init(){
     document.getElementById('password').placeholder=translations["enterPassword"][savedLanguage]
     // $("#password").attr("placeholder",translations["enterPassword"][savedLanguage])
     startCamera('registerFace');
-    
+
+   
 
    
     layui.use(['util'],function(){
         var util = layui.util;
+        var form = layui.form;
 
         util.on({
             registerFace: function (){
@@ -28,6 +30,9 @@ async function init(){
 
             }
         });
+      
+
+
 
     });
 
@@ -35,6 +40,13 @@ async function init(){
     await loadSuccessPage();
     changeErrorButtonName('Close');
 
+    var fromLogin= localStorage.getItem('fromLogin');
+    if(fromLogin==='1'){
+        let emailValue = localStorage.getItem('email');
+        console.log(`email value: ${emailValue}`);
+        document.getElementById('email').value = emailValue;
+
+    }
 
 }
 
